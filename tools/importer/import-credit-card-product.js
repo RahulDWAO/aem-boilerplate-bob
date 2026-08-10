@@ -174,7 +174,7 @@ function findBlocksOnPage(document, template) {
     }
   });
 
-  console.log(`Found ${pageBlocks.length} block instances on page`);
+  // console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }
 

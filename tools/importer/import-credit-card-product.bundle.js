@@ -480,7 +480,7 @@ var CustomImportScript = (() => {
         console.warn(`Block "${blockDef.name}" not found with any selector: ${blockDef.instances.join(", ")}`);
       }
     });
-    console.log(`Found ${pageBlocks.length} block instances on page`);
+    // console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
   var import_credit_card_product_default = {
