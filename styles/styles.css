@@ -1,5 +1,3 @@
-@import url('brand.css');
-
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -13,17 +11,29 @@
  */
 
 :root {
-  /* colors (brand values from brand.css) */
+  /* Fonts */
+  --body-font-family: "Work Sans", work-sans-fallback, sans-serif;
+  --heading-font-family: "Montserrat", montserrat-fallback, sans-serif;
+
+  /* Colors */
   --background-color: #fff;
   --light-color: rgb(245 245 245);
   --dark-color: rgb(58 73 147);
   --text-color: rgb(73 73 73);
+  --heading-color: rgb(58 73 147);
   --link-color: rgb(40 39 40);
   --link-hover-color: rgb(10 88 202);
 
-  /* fonts */
-  --body-font-family: "Work Sans", work-sans-fallback, sans-serif;
-  --heading-font-family: "Montserrat", montserrat-fallback, sans-serif;
+  /* Brand palette */
+  --brand-navy: rgb(31 60 102);
+  --brand-orange: rgb(240 90 48);
+  --brand-orange-hover: rgb(214 76 37);
+  --brand-light-grey: rgb(245 245 245);
+
+  /* Spacing */
+  --section-padding: 40px;
+  --content-max-width: 1320px;
+  --nav-height: 64px;
 
   /* body sizes */
   --body-font-size-m: 16px;
@@ -37,9 +47,6 @@
   --heading-font-size-m: 19px;
   --heading-font-size-s: 17px;
   --heading-font-size-xs: 16px;
-
-  /* nav height */
-  --nav-height: 64px;
 }
 
 /* fallback fonts */
