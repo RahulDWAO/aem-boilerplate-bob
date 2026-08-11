@@ -13,7 +13,7 @@
 /* --- typography (source values; headings already match global brand tokens) --- */
 .columns-product h2 {
   margin: 0 0 24px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.2;
   color: var(--text-color);
 }
@@ -23,7 +23,7 @@
 .columns-product h3 {
   margin: 0 0 12px;
   font-size: var(--heading-font-size-m);
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.2;
   color: rgb(13 13 13);
 }
