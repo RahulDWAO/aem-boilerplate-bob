@@ -100,8 +100,9 @@
 
 @media (width >= 900px) {
   .hero-cta {
-    margin: 0 0 56px;
+    margin: 2rem 0 56px;
     border-radius: 35px;
+    padding: 2rem 1rem;
   }
 
   .hero-cta .hero-cta-content {

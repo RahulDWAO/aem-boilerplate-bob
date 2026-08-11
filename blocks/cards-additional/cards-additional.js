@@ -68,7 +68,24 @@ export default function decorate(block) {
   ul.addEventListener('scroll', () => updateArrows(ul, prev, next), { passive: true });
   window.addEventListener('resize', () => updateArrows(ul, prev, next));
 
-  block.replaceChildren(prev, ul, next);
+  const carousel = document.createElement('div');
+  carousel.className = 'cards-additional-carousel';
+  carousel.append(prev, ul, next);
+
+  block.replaceChildren(carousel);
+
+  // Pull sibling default-content-wrappers into the block so they share the background box
+  const wrapper = block.parentElement;
+  if (wrapper) {
+    const prevSibling = wrapper.previousElementSibling;
+    if (prevSibling && prevSibling.classList.contains('default-content-wrapper')) {
+      block.prepend(prevSibling);
+    }
+    const nextSibling = wrapper.nextElementSibling;
+    if (nextSibling && nextSibling.classList.contains('default-content-wrapper')) {
+      block.append(nextSibling);
+    }
+  }
 
   // Set initial arrow state after layout settles.
   requestAnimationFrame(() => updateArrows(ul, prev, next));

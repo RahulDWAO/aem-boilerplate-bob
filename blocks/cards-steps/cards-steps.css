@@ -39,10 +39,10 @@
   align-self: start;
   margin: 0;
   font-family: var(--heading-font-family);
-  font-size: 112px;
+  font-size: 100px;
   font-weight: 700;
-  line-height: 0.7;
-  color: var(--brand-orange);
+  line-height: 0.8;
+  color: var(--brand-orange, #f05a30);
 }
 
 /* everything after the number flows in the text column */
@@ -52,43 +52,68 @@
 
 /* step title */
 .cards-steps .cards-steps-card-body h4 {
-  margin: 0 0 33.6px;
+  margin: 0 0 12px;
   font-family: var(--heading-font-family);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
-  color: var(--brand-orange);
+  color: var(--brand-orange, #f05a30);
 }
 
 /* step description */
-.cards-steps .cards-steps-card-body p {
-  margin: 0;
-  font-family: var(--body-font-family);
+.cards-steps .cards-steps-card-body p,
+.cards-steps .cards-steps-card-body li {
+  margin: 0 0 4px;
+  font-family: 'Work Sans', sans-serif;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5;
-  color: var(--text-color);
+  color: #494949;
+}
+
+.cards-steps .cards-steps-card-body ul {
+  margin: 0 0 12px 16px;
+  padding: 0;
+}
+
+/* read more link */
+.cards-steps .cards-steps-card-body a {
+  color: var(--brand-orange, #f05a30);
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.cards-steps .cards-steps-card-body a:hover {
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {
+  .cards-steps.block {
+    margin: 3rem auto;
+    max-width: 90%;
+  }
+
   .cards-steps > ul {
     grid-template-columns: repeat(4, 1fr);
-    gap: 40px 24px;
+    gap: 20px;
   }
 
   .cards-steps .cards-steps-card-body h3 {
-    font-size: 240px;
-    line-height: 0.7;
+    font-size: 160px;
+    line-height: 0.75;
+    margin-top: -10px;
   }
 
   .cards-steps .cards-steps-card-body h4 {
-    margin: 0 0 48px;
-    font-size: 19px;
-    line-height: 1.2;
+    margin: 0 0 16px;
+    font-size: 16px;
   }
 
-  .cards-steps .cards-steps-card-body p {
-    font-size: 14px;
-    line-height: 1.5;
+  .cards-steps .cards-steps-card-body p,
+  .cards-steps .cards-steps-card-body li {
+    font-size: 12px;
   }
 }

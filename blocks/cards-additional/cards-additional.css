@@ -8,14 +8,47 @@
  * more" are DEFAULT CONTENT siblings outside this block, so not styled here.
  */
 
-/* Rounded light-grey container with arrows flanking the scroll track */
-.cards-additional {
+/* Rounded light-grey container encompassing heading, carousel, and disclaimer */
+.cards-additional.block {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: var(--brand-light-grey);
+  flex-direction: column;
+  background-color: rgb(246 246 246);
   border-radius: 40px;
   padding: 32px 16px;
+  margin: 3rem auto;
+  max-width: 90%;
+  gap: 24px;
+}
+
+.cards-additional .default-content-wrapper h2 {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  color: rgb(85, 85, 85);
+}
+
+.cards-additional > .default-content-wrapper:last-child {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.cards-additional > .default-content-wrapper:last-child p {
+  font-size: 12px;
+  color: #777;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.cards-additional > .default-content-wrapper:last-child a {
+  color: var(--brand-orange, #f05a30);
+  text-decoration: none;
+}
+
+.cards-additional .cards-additional-carousel {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
 }
 
 /* Scroll-snap track — horizontal, one card snaps into view */
@@ -96,14 +129,14 @@
   text-decoration: underline;
 }
 
-/* Prev/next arrow buttons — orange circular, matching source slider arrows */
+/* Prev/next arrow buttons — grey circular, matching source slider arrows */
 .cards-additional .cards-additional-arrow {
   flex: 0 0 auto;
   width: 40px;
   height: 40px;
   border: 0;
   border-radius: 50%;
-  background-color: var(--brand-orange);
+  background-color: #e6e6e6;
   cursor: pointer;
   position: relative;
   transition: background-color 0.2s ease, opacity 0.2s ease;
@@ -116,8 +149,8 @@
   margin: auto;
   width: 9px;
   height: 9px;
-  border-top: 2px solid #fff;
-  border-right: 2px solid #fff;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
 }
 
 .cards-additional .cards-additional-prev::before {
@@ -134,14 +167,14 @@
 }
 
 .cards-additional .cards-additional-arrow:hover:not(:disabled) {
-  background-color: var(--brand-orange-hover);
+  background-color: #d4d4d4;
 }
 
 /* Tablet: ~2.2 cards visible */
 @media (width >= 600px) {
-  .cards-additional {
+  .cards-additional.block {
     padding: 40px 24px;
-    gap: 16px;
+    gap: 24px;
   }
 
   .cards-additional .cards-additional-track > li {
@@ -151,9 +184,13 @@
 
 /* Desktop: rounded box grows; ~4 cards visible (matches source slider) */
 @media (width >= 900px) {
-  .cards-additional {
-    border-radius: 90px;
-    padding: 48px 32px;
+  .cards-additional.block {
+    border-radius: 60px;
+    padding: 48px 48px;
+    gap: 32px;
+  }
+
+  .cards-additional .cards-additional-carousel {
     gap: 20px;
   }
 
