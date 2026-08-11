@@ -3,7 +3,7 @@
 footer {
   background-color: rgb(251 251 251);
   color: rgb(73 73 73);
-  font-family: var(--body-font-family);
+  font-family: 'Work Sans', sans-serif;
 }
 
 footer .footer {
@@ -55,6 +55,7 @@ footer .footer-brand img {
 footer .footer-brand p {
   margin-top: 12px;
   font-size: 14px;
+  font-weight: 400;
   color: rgb(73 73 73);
 }
 
@@ -63,7 +64,6 @@ footer .footer-social h2,
 footer .footer-links h2 {
   margin: 0 0 15px;
   color: var(--brand-orange, rgb(240 90 48));
-  font-family: var(--body-font-family);
   font-size: 18px;
   font-weight: 600;
   line-height: 1.4;
@@ -91,13 +91,13 @@ footer .footer-links {
 
 footer .footer-links li {
   line-height: 21px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 footer .footer-links a {
   color: #000;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 /* ─── Bottom region: disclaimer + legal + copyright ───── */
@@ -108,7 +108,8 @@ footer .footer-disclaimer {
 
 footer .footer-disclaimer p {
   font-size: 12px;
-  line-height: 18px;
+  font-weight: 300;
+  line-height: 1.5;
   text-align: center;
   color: rgb(73 73 73);
 }
@@ -126,6 +127,7 @@ footer .footer-legal ul {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
+  margin: 0 1rem;
 }
 
 footer .footer-legal li {
@@ -147,6 +149,7 @@ footer .footer-legal li:not(:last-child)::after {
 footer .footer-legal a {
   color: rgb(73 73 73);
   font-size: 14px;
+  font-weight: 400;
 }
 
 footer .footer-copyright {
@@ -154,9 +157,11 @@ footer .footer-copyright {
 }
 
 footer .footer-copyright p {
+  font-family: var(--heading-font-family, Montserrat), sans-serif;
   font-size: 12px;
   font-weight: 500;
   color: #000;
+  line-height: 1.5;
 }
 
 /* ─── Interactive (hover) states ──────────────────────── */
