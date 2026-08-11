@@ -5,6 +5,74 @@
  * Values extracted from source computed styles. Single-open accordion.
  */
 
+/* ---- Block Container -------------------------------------------------- */
+.accordion-faq.block {
+  background-color: #fff;
+  border-radius: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+  padding: 40px 16px 56px 16px;
+  margin: 3rem auto;
+  max-width: 90%;
+  position: relative;
+}
+
+.accordion-faq .default-content-wrapper h2 {
+  text-align: center;
+  font-family: var(--heading-font-family);
+  font-weight: 500;
+  color: rgb(50, 50, 50);
+  margin-top: 0;
+  margin-bottom: 32px;
+}
+
+.accordion-faq > .default-content-wrapper:last-child {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  margin: 0;
+  background: #fff;
+  border-radius: 30px;
+  display: none;
+}
+
+.accordion-faq > .default-content-wrapper:last-child p {
+  margin: 0;
+}
+
+.accordion-faq > .default-content-wrapper:last-child a,
+.accordion-faq > .default-content-wrapper:last-child a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid var(--brand-orange, #f05a30);
+  color: #1b3d6d;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  gap: 8px;
+  margin: 0;
+}
+
+.accordion-faq > .default-content-wrapper:last-child a::after,
+.accordion-faq > .default-content-wrapper:last-child a.button::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border: solid #1b3d6d;
+  border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.accordion-faq > .default-content-wrapper:last-child a:hover,
+.accordion-faq > .default-content-wrapper:last-child a.button:hover {
+  background: #fdfdfd;
+}
+
 /* ---- Item (details) --------------------------------------------------- */
 .accordion-faq .accordion-faq-item {
   background-color: #fff;
@@ -105,6 +173,11 @@
 
 /* ---- Desktop ---------------------------------------------------------- */
 @media (width >= 900px) {
+  .accordion-faq.block {
+    padding: 56px 80px 80px 80px;
+    border-radius: 60px;
+  }
+
   .accordion-faq .accordion-faq-item {
     padding: 16px 29px;
   }

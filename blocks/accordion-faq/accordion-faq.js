@@ -38,4 +38,17 @@ export default function decorate(block) {
       }
     });
   });
+
+  // Pull sibling default-content-wrappers into the block so they share the background box
+  const wrapper = block.parentElement;
+  if (wrapper) {
+    const prevSibling = wrapper.previousElementSibling;
+    if (prevSibling && prevSibling.classList.contains('default-content-wrapper')) {
+      block.prepend(prevSibling);
+    }
+    const nextSibling = wrapper.nextElementSibling;
+    if (nextSibling && nextSibling.classList.contains('default-content-wrapper')) {
+      block.append(nextSibling);
+    }
+  }
 }

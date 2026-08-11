@@ -388,7 +388,7 @@ main .section.dark {
 main .section.faq-card > div {
   background-color: #fff;
   border-radius: 50px;
-  box-shadow: 0 10px 30px 0 rgb(22 43 117 / 10%);
+  /* box-shadow: 0 10px 30px 0 rgb(22 43 117 / 10%); */
   padding: 20px 40px 48px;
 }
 
