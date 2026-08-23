@@ -1,11 +1,20 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-// media query match that indicates mobile/tablet width
+// media query match that indicates desktop width
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
 /**
- * Closes the mobile menu and resets the hamburger to its default state.
+ * Closes any open megamenu panel and clears the active trigger state.
+ * @param {Element} nav The nav element
+ */
+function closeAllPanels(nav) {
+  nav.querySelectorAll('.nav-megamenu.is-open').forEach((p) => p.classList.remove('is-open'));
+  nav.querySelectorAll('.nav-trigger[aria-expanded="true"]').forEach((t) => t.setAttribute('aria-expanded', 'false'));
+}
+
+/**
+ * Closes the mobile drawer and resets the hamburger to its default state.
  * @param {Element} nav The nav element
  */
 function closeMobileMenu(nav) {
@@ -16,14 +25,11 @@ function closeMobileMenu(nav) {
 }
 
 /**
- * Toggles the mobile menu open/closed.
+ * Toggles the mobile drawer open/closed.
  * @param {Element} nav The nav element
- * @param {Boolean} forceExpanded Optional — force a specific state
  */
-function toggleMenu(nav, forceExpanded = null) {
-  const expanded = forceExpanded !== null
-    ? !forceExpanded
-    : nav.getAttribute('aria-expanded') === 'true';
+function toggleMobileMenu(nav) {
+  const expanded = nav.getAttribute('aria-expanded') === 'true';
   const button = nav.querySelector('.nav-hamburger button');
   document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
@@ -31,32 +37,46 @@ function toggleMenu(nav, forceExpanded = null) {
 }
 
 /**
- * Builds a search form. Search controls are created in JS (not authored in the
- * nav fragment) so the fragment stays portable and DA/EDS-safe.
- * @returns {Element} the search form wrapper
+ * Wires a trigger to its megamenu panel: open on hover (desktop), toggle on
+ * click, and support keyboard (Enter/Space). Panels are also opened when the
+ * pointer enters the panel itself so it stays open while the user moves into it.
+ * @param {Element} nav The nav element
+ * @param {Element} trigger The trigger anchor/button
+ * @param {Element} panel The associated .nav-megamenu panel
  */
-function buildSearchForm() {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'nav-search';
-  const form = document.createElement('form');
-  form.setAttribute('role', 'search');
-  form.action = '/search';
-  form.method = 'get';
+function wireMegamenu(nav, trigger, panel) {
+  const open = () => {
+    if (!isDesktop.matches) return;
+    closeAllPanels(nav);
+    panel.classList.add('is-open');
+    trigger.setAttribute('aria-expanded', 'true');
+  };
+  const close = () => {
+    panel.classList.remove('is-open');
+    trigger.setAttribute('aria-expanded', 'false');
+  };
 
-  const input = document.createElement('input');
-  input.type = 'search';
-  input.name = 'q';
-  input.placeholder = 'Search';
-  input.setAttribute('aria-label', 'Search');
+  trigger.addEventListener('mouseenter', open);
+  panel.addEventListener('mouseenter', () => { if (isDesktop.matches) panel.classList.add('is-open'); });
 
-  const button = document.createElement('button');
-  button.type = 'submit';
-  button.setAttribute('aria-label', 'Search');
-  button.className = 'nav-search-submit';
+  trigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isOpen = panel.classList.contains('is-open');
+    closeAllPanels(nav);
+    if (!isOpen) {
+      panel.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  });
 
-  form.append(input, button);
-  wrapper.append(form);
-  return wrapper;
+  trigger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      trigger.click();
+    }
+  });
+
+  return { open, close };
 }
 
 /**
@@ -79,24 +99,30 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   // The fragment produces five sections, in order:
-  // 0 brand/logo, 1 utility links, 2 login, 3 main nav links, 4 apply/track
+  // 0 brand/logo, 1 nav triggers, 2 Products megamenu, 3 Explore megamenu, 4 actions
   const sections = [...nav.children];
-  const [brand, utility, login, primary, actions] = sections;
+  const [brand, triggers, products, explore, actions] = sections;
   if (brand) brand.classList.add('nav-brand');
-  if (utility) utility.classList.add('nav-utility');
-  if (login) login.classList.add('nav-login');
-  if (primary) primary.classList.add('nav-primary');
+  if (triggers) triggers.classList.add('nav-links');
+  if (products) {
+    products.classList.add('nav-megamenu', 'nav-megamenu-products', 'nav-panel');
+    products.dataset.depth = '0';
+  }
+  if (explore) {
+    explore.classList.add('nav-megamenu', 'nav-megamenu-explore', 'nav-panel');
+    explore.dataset.depth = '0';
+  }
   if (actions) actions.classList.add('nav-actions');
 
-  // Strip EDS button decoration from the logo + login links
+  // Strip EDS button decoration from any decorated links (logo, actions).
   nav.querySelectorAll('a.button').forEach((a) => {
     const container = a.closest('.button-container');
     a.className = '';
     if (container) container.className = '';
   });
 
-  // Resolve relative nav image paths (authored relative to the nav fragment at
-  // /content/nav) to absolute /content/… paths so they load on any page URL.
+  // Resolve relative nav image paths (authored relative to /content/nav) to
+  // absolute /content/… paths so they load on any page URL.
   nav.querySelectorAll('img[src]').forEach((img) => {
     const src = img.getAttribute('src');
     if (src && !src.startsWith('http') && !src.startsWith('/')) {
@@ -104,77 +130,93 @@ export default async function decorate(block) {
     }
   });
 
-  // Build the two visual rows: a top (grey) utility bar and a bottom (orange)
-  // nav bar. Each row spans full width (colored background) with a centered,
-  // max-width inner container holding the content.
-  const topRow = document.createElement('div');
-  topRow.className = 'nav-row nav-row-top';
-  const topInner = document.createElement('div');
-  topInner.className = 'nav-row-inner';
-  if (brand) topInner.append(brand);
-  const topTools = document.createElement('div');
-  topTools.className = 'nav-utility-group';
-  if (utility) topTools.append(utility);
-  if (login) topTools.append(login);
-  topInner.append(topTools);
-  topRow.append(topInner);
+  // Build the fixed header bar: logo (left), nav links (center), actions (right).
+  const bar = document.createElement('div');
+  bar.className = 'nav-bar';
+  const barInner = document.createElement('div');
+  barInner.className = 'nav-bar-inner';
 
-  const bottomRow = document.createElement('div');
-  bottomRow.className = 'nav-row nav-row-bottom';
-  const bottomInner = document.createElement('div');
-  bottomInner.className = 'nav-row-inner';
-  if (primary) bottomInner.append(primary);
-  const bottomTools = document.createElement('div');
-  bottomTools.className = 'nav-tools';
-  if (actions) bottomTools.append(actions);
-  bottomTools.append(buildSearchForm());
-  bottomInner.append(bottomTools);
-  bottomRow.append(bottomInner);
+  // Turn the Products / Explore link list into hover triggers bound to panels.
+  const triggerMap = { products, explore };
+  if (triggers) {
+    triggers.querySelectorAll('a').forEach((a) => {
+      const key = (a.getAttribute('href') || '').replace('#', '');
+      const panel = triggerMap[key];
+      a.classList.add('nav-trigger');
+      a.setAttribute('role', 'button');
+      a.setAttribute('aria-haspopup', 'true');
+      a.setAttribute('aria-expanded', 'false');
+      a.removeAttribute('href');
+      a.setAttribute('tabindex', '0');
+      if (panel) wireMegamenu(nav, a, panel);
+    });
+  }
 
-  nav.append(topRow, bottomRow);
-
-  // Mobile drawer: a single left slide-in panel that holds all nav links.
-  // On mobile the utility group + bottom row are relocated into the drawer; on
-  // desktop they return to their rows. This keeps ONE copy of every link
-  // (no duplication) so content stays faithful in both layouts.
-  const drawer = document.createElement('div');
-  drawer.className = 'nav-drawer';
-  topRow.append(drawer);
-
-  const applyLayout = (desktop) => {
-    if (desktop) {
-      // restore desktop rows
-      if (utility || login) topInner.append(topTools);
-      bottomInner.append(primary);
-      bottomInner.append(bottomTools);
-    } else {
-      // move drawer content into the slide-in panel. Order matches the source
-      // mobile drawer: main nav links, then apply/track + search, then utility
-      // links + login.
-      drawer.append(primary, bottomTools, topTools);
+  // Convert the first action (Test Ride) into a primary CTA-styled link, and
+  // the India entry into a country selector affordance.
+  if (actions) {
+    const items = [...actions.querySelectorAll('li')];
+    const cta = items[0]?.querySelector('a');
+    if (cta) cta.classList.add('nav-cta');
+    const country = items[1]?.querySelector('a');
+    if (country) {
+      country.classList.add('nav-country');
+      country.setAttribute('role', 'button');
+      country.setAttribute('aria-haspopup', 'true');
+      country.setAttribute('aria-expanded', 'false');
+      country.removeAttribute('href');
+      country.setAttribute('tabindex', '0');
+      country.addEventListener('click', (e) => {
+        e.preventDefault();
+        const expanded = country.getAttribute('aria-expanded') === 'true';
+        country.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      });
     }
-  };
-  applyLayout(isDesktop.matches);
+  }
 
-  // hamburger for mobile — lives in the top row's inner container
+  if (brand) barInner.append(brand);
+  if (triggers) barInner.append(triggers);
+  if (actions) barInner.append(actions);
+
+  // Hamburger for mobile — prepended so it sits at the left on small screens.
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav));
-  topInner.prepend(hamburger);
+  hamburger.addEventListener('click', () => toggleMobileMenu(nav));
+  barInner.prepend(hamburger);
+
+  bar.append(barInner);
+
+  // Assemble: bar first, then the megamenu panels (full-width, below the bar).
+  const assembled = [bar];
+  if (products) assembled.push(products);
+  if (explore) assembled.push(explore);
+  nav.replaceChildren(...assembled);
+
   nav.setAttribute('aria-expanded', 'false');
 
-  // reset menu state + reflow when crossing the desktop/mobile breakpoint
-  isDesktop.addEventListener('change', () => {
-    closeMobileMenu(nav);
-    applyLayout(isDesktop.matches);
+  // Close panels when the pointer leaves the whole nav (desktop hover-out).
+  nav.addEventListener('mouseleave', () => { if (isDesktop.matches) closeAllPanels(nav); });
+
+  // Close on Escape; also close mobile drawer on Escape.
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') {
+      closeAllPanels(nav);
+      if (!isDesktop.matches) closeMobileMenu(nav);
+    }
   });
 
-  // close on escape
-  window.addEventListener('keydown', (e) => {
-    if (e.code === 'Escape' && !isDesktop.matches) closeMobileMenu(nav);
+  // Close desktop panels when clicking outside the header.
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target)) closeAllPanels(nav);
+  });
+
+  // Reset state and reflow when crossing the desktop/mobile breakpoint.
+  isDesktop.addEventListener('change', () => {
+    closeMobileMenu(nav);
+    closeAllPanels(nav);
   });
 
   const navWrapper = document.createElement('div');
