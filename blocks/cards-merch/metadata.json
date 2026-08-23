@@ -1,0 +1,37 @@
+{
+  "variantName": "cards-merch",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-23T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.vidaworld.com/vida-kkr-knight-edition.html",
+    "originPage": "VIDA VX2 KKR Knight Edition product/campaign landing page",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "product",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "grid of product cards: image + short description + Know More link",
+    "buttonCount": 1,
+    "imageCount": 2
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "merchandise/product card grids with image + description + CTA link",
+      "shop-out cards linking to external stores"
+    ],
+    "notSuitableFor": [
+      "pure image mosaics",
+      "step-by-step numbered lists"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/vida-kkr-knight-edition"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-23T00:00:00.000Z"
+  }
+}

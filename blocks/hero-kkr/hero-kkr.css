@@ -1,0 +1,40 @@
+/*
+ * hero-kkr: full-bleed KKR campaign banner.
+ * The source hero is a single edge-to-edge artwork (1440x730, ~1.97:1) with the
+ * badge, heading and CTA baked into the image. We render it as a clean,
+ * responsive, full-width banner — no letterboxing, no crop, no extra padding.
+ */
+
+/* Break out of the section's content max-width so the banner is edge-to-edge. */
+.hero-kkr-container .hero-kkr-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-kkr {
+  margin: 0;
+  padding: 0;
+}
+
+/* Collapse the authored row/cell wrappers so nothing adds spacing. */
+.hero-kkr > div,
+.hero-kkr > div > div {
+  margin: 0;
+  padding: 0;
+}
+
+/* picture wraps the img; remove inline whitespace gap and let it fill width. */
+.hero-kkr picture {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+/* Show the artwork at its natural aspect ratio, full width, uncropped. */
+.hero-kkr img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+}

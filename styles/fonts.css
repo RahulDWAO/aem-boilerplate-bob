@@ -1,4 +1,4 @@
 /* stylelint-disable max-line-length */
 
-/* Brand fonts — Montserrat (headings) + Work Sans (body), from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap');
+/* Brand font — Inter (substitute for source's proprietary "PP Neue Montreal"), from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');

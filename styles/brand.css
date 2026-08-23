@@ -1,36 +1,38 @@
 /*
  * brand.css — Brand design tokens extracted from
- * https://www.bobcard.co.in/credit-card-types/eterna
+ * https://www.vidaworld.com/vida-kkr-knight-edition.html
  */
 
 :root {
-  /* Fonts */
-  --heading-font-family: "Montserrat", sans-serif;
-  --body-font-family: "Work Sans", sans-serif;
+  /* Fonts — source uses proprietary "PP Neue Montreal"; Inter is the closest
+     free grotesque substitute with matching metrics/weights. */
+  --heading-font-family: "Inter", sans-serif;
+  --body-font-family: "Inter", sans-serif;
 
   /* Colors */
   --background-color: #fff;
-  --text-color: rgb(73 73 73);
-  --heading-color: rgb(58 73 147);
-  --link-color: rgb(40 39 40);
-  --link-hover-color: rgb(10 88 202);
+  --text-color: rgb(29 27 27);
+  --heading-color: rgb(0 0 0);
+  --link-color: rgb(255 83 16);
+  --link-hover-color: rgb(214 66 8);
 
   /* Brand palette */
-  --brand-navy: rgb(31 60 102);
-  --brand-orange: rgb(240 90 48);
-  --brand-orange-hover: rgb(214 76 37);
-  --brand-light-grey: rgb(245 245 245);
+  --brand-orange: rgb(255 83 16);
+  --brand-orange-hover: rgb(214 66 8);
+  --brand-purple: rgb(64 2 148);
+  --brand-purple-dark: rgb(20 8 46);
+  --brand-cream: rgb(249 247 242);
 
   /* Spacing */
-  --section-padding: 40px;
-  --content-max-width: 1320px;
-  --nav-height: 51px;
+  --section-padding: 48px;
+  --content-max-width: 1200px;
+  --nav-height: 64px;
 
   /* Heading sizes (desktop) */
-  --heading-size-xxl: 24px;
-  --heading-size-xl: 22px;
-  --heading-size-l: 23px;
-  --heading-size-m: 20px;
-  --heading-size-s: 18px;
-  --heading-size-xs: 16px;
+  --heading-size-xxl: 80px;
+  --heading-size-xl: 40px;
+  --heading-size-l: 28px;
+  --heading-size-m: 24px;
+  --heading-size-s: 20px;
+  --heading-size-xs: 18px;
 }

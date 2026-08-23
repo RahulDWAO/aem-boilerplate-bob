@@ -1,0 +1,114 @@
+/* Block: columns-desc — VIDA VX2 Knight Edition description card.
+ * Source: https://www.vidaworld.com/vida-kkr-knight-edition.html (div.descriptioncard)
+ * Values extracted from source computed styles. Full-bleed purple patterned
+ * background (description-bg.webp) with the scooter baked in on the right;
+ * an inner rounded wrapper holds a cream text panel on the left and a
+ * transparent cell on the right that reveals the scooter through the bg. */
+
+.columns-desc.block {
+  /* the purple patterned bg + scooter (baked into the image) */
+  background-image: url('./description-bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 24px;
+  border-radius: 24px;
+  overflow: hidden;
+  color: rgb(29 27 27);
+}
+
+/* inner wrapper (rounded, clips corners); transparent so the block bg shows through */
+.columns-desc > div {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* left text panel — opaque cream, covers the purple bg on its side */
+.columns-desc > div > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 24px;
+  background-color: rgb(249 245 238);
+}
+
+/* right cell — empty/transparent, reveals the scooter from the block bg */
+.columns-desc > div > div:last-child {
+  min-height: 260px;
+  background: transparent;
+}
+
+/* heading */
+.columns-desc h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.1px;
+  color: rgb(29 27 27);
+}
+
+/* body copy */
+.columns-desc > div > div:first-child p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgb(29 27 27);
+}
+
+/* the "Locate a Dealer" pill — authored as a bare paragraph */
+.columns-desc > div > div:first-child p:last-child {
+  align-self: flex-start;
+  margin-top: 8px;
+  padding: 12px 32px;
+  border-radius: 50px;
+  background-color: rgb(29 27 27);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
+}
+
+@media (width >= 900px) {
+  .columns-desc.block {
+    padding: 64px;
+  }
+
+  .columns-desc > div {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 600px;
+  }
+
+  /* left / right split matches source (618 : 694 ≈ 47% : 53%) */
+  .columns-desc > div > div:first-child {
+    box-sizing: border-box;
+    flex: 0 0 47%;
+    gap: 40px;
+    padding: 48px;
+    justify-content: center;
+  }
+
+  .columns-desc > div > div:last-child {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .columns-desc h2 {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .columns-desc > div > div:first-child p {
+    font-size: 24px;
+  }
+
+  .columns-desc > div > div:first-child p:last-child {
+    font-size: 20px;
+  }
+}

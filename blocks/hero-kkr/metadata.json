@@ -1,0 +1,37 @@
+{
+  "variantName": "hero-kkr",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-23T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.vidaworld.com/vida-kkr-knight-edition.html",
+    "originPage": "VIDA VX2 KKR Knight Edition product/campaign landing page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "product-hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image + badge + heading + subheading + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "dark full-bleed product/campaign hero banners",
+      "landing pages with a background image and single CTA"
+    ],
+    "notSuitableFor": [
+      "light text-only intros",
+      "multi-column hero layouts"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/vida-kkr-knight-edition"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-23T00:00:00.000Z"
+  }
+}

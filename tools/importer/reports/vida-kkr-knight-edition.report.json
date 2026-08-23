@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "url": "https://www.vidaworld.com/vida-kkr-knight-edition.html",
+  "path": "vida-kkr-knight-edition",
+  "timestamp": "2026-08-23T17:19:34.271Z",
+  "title": "VIDA VX2 Plus KKR Knight Edition – Electric Scooter | VIDA",
+  "template": "vida-kkr-product",
+  "blocks": [
+    "hero-kkr",
+    "carousel-gallery",
+    "cards-kkr-grid",
+    "columns-desc",
+    "cards-merch"
+  ]
+}

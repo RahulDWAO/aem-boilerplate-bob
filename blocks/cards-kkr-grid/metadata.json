@@ -1,0 +1,37 @@
+{
+  "variantName": "cards-kkr-grid",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-23T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.vidaworld.com/vida-kkr-knight-edition.html",
+    "originPage": "VIDA VX2 KKR Knight Edition product/campaign landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "feature-grid",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "masonry grid of linked image tiles with embedded captions",
+    "buttonCount": 0,
+    "imageCount": 5
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "masonry/mosaic feature grids of linked image tiles",
+      "visual highlight grids where each tile links to a page"
+    ],
+    "notSuitableFor": [
+      "text-heavy card grids with separate title/description fields",
+      "product listings with prices"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/vida-kkr-knight-edition"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-23T00:00:00.000Z"
+  }
+}

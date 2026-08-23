@@ -1,0 +1,206 @@
+/* Block: carousel-gallery — "Key KKR Moments" community gallery.
+   A horizontal peek carousel of linked image cards with a translucent dot-pill
+   nav and a trailing "Visit VIDAWorld on Instagram" CTA.
+   Values extracted from source computed styles:
+   https://www.vidaworld.com/vida-kkr-knight-edition.html (div.communitygallery) */
+
+/* Full-bleed cream section (source main container bg = rgb(249 247 242)). */
+.carousel-gallery-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.carousel-gallery {
+  --cg-card-radius: 16px;
+  --cg-card-aspect: 580 / 442;
+
+  background-color: var(--brand-cream, rgb(249 247 242));
+  padding: 40px 0 48px;
+}
+
+/* Track / viewport ------------------------------------------------------- */
+.carousel-gallery .carousel-gallery-slides-container {
+  position: relative;
+}
+
+.carousel-gallery .carousel-gallery-slides,
+.carousel-gallery .carousel-gallery-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-gallery .carousel-gallery-slides {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 16px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
+
+.carousel-gallery .carousel-gallery-slides::-webkit-scrollbar {
+  display: none;
+}
+
+/* Each slide is one image card. Neighbours peek at the edges. */
+.carousel-gallery .carousel-gallery-slide {
+  flex: 0 0 82%;
+  scroll-snap-align: center;
+  position: relative;
+}
+
+/* Discard the empty second cell that never becomes a real slide element. */
+.carousel-gallery .carousel-gallery-slide-content {
+  display: none;
+}
+
+/* The image cell holds the linked picture. EDS may wrap it in a <p>. */
+.carousel-gallery .carousel-gallery-slide-image,
+.carousel-gallery .carousel-gallery-slide-image p {
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.carousel-gallery .carousel-gallery-slide-image a {
+  display: block;
+  position: relative;
+  border-radius: var(--cg-card-radius);
+  overflow: hidden;
+}
+
+.carousel-gallery .carousel-gallery-slide-image picture {
+  display: block;
+}
+
+.carousel-gallery .carousel-gallery-slide-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--cg-card-aspect);
+  object-fit: cover;
+  border-radius: var(--cg-card-radius);
+}
+
+/* Play-button overlay on each video card. */
+.carousel-gallery .carousel-gallery-slide-image a::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 68px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 85%);
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 7.5v9l7-4.5z" fill="%231D1B1B"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 54% 50%;
+  background-size: 32px 32px;
+  pointer-events: none;
+  transition: background-color 0.2s ease;
+}
+
+.carousel-gallery .carousel-gallery-slide-image a:hover::after {
+  background-color: rgb(255 255 255);
+}
+
+/* Dot navigation — translucent grey pill capsule ------------------------- */
+.carousel-gallery nav {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-gallery .carousel-gallery-slide-indicators {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 24px 0 0;
+  padding: 15px 22px 14px;
+  background-color: rgb(163 163 163 / 60%);
+  border-radius: 50px;
+  backdrop-filter: blur(2px);
+  line-height: 0;
+}
+
+.carousel-gallery .carousel-gallery-slide-indicator {
+  display: flex;
+}
+
+.carousel-gallery .carousel-gallery-slide-indicator button {
+  width: 11px;
+  height: 11px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50px;
+  background-color: rgb(255 255 255 / 40%);
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.carousel-gallery .carousel-gallery-slide-indicator button:disabled,
+.carousel-gallery .carousel-gallery-slide-indicator button[aria-current='true'] {
+  width: 26px;
+  background-color: rgb(255 255 255);
+}
+
+.carousel-gallery .carousel-gallery-slide-indicator button:hover,
+.carousel-gallery .carousel-gallery-slide-indicator button:focus-visible {
+  background-color: rgb(255 255 255);
+}
+
+/* Source has no side prev/next arrows — dots only. */
+.carousel-gallery .carousel-gallery-navigation-buttons {
+  display: none;
+}
+
+/* Trailing "Visit VIDAWorld on Instagram" CTA --------------------------- */
+.carousel-gallery .carousel-gallery-cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 8px 16px 0;
+}
+
+.carousel-gallery .carousel-gallery-cta p {
+  margin: 0;
+}
+
+.carousel-gallery .carousel-gallery-cta a,
+.carousel-gallery .carousel-gallery-cta a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgb(0 0 0);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.carousel-gallery .carousel-gallery-cta a:hover {
+  text-decoration: none;
+  opacity: 0.75;
+}
+
+.carousel-gallery .carousel-gallery-cta img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Tablet / desktop — larger centred card with peeking neighbours. */
+@media (width >= 900px) {
+  .carousel-gallery {
+    padding: 56px 0 64px;
+  }
+
+  .carousel-gallery .carousel-gallery-slides {
+    gap: 40px;
+    padding: 0 40px;
+  }
+
+  .carousel-gallery .carousel-gallery-slide {
+    flex: 0 0 min(580px, 42%);
+  }
+}

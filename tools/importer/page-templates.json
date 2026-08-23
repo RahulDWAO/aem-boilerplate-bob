@@ -143,6 +143,143 @@
           ]
         }
       ]
+    },
+    {
+      "name": "vida-kkr-product",
+      "urls": [
+        "https://www.vidaworld.com/vida-kkr-knight-edition.html"
+      ],
+      "coverageGaps": [],
+      "description": "VIDA VX2 KKR Knight Edition product/campaign landing page: hero with interest form, community gallery carousel, manifesto text, KKR feature grid, description card (2-col), merchandise banner carousels, price-and-spec section, header + footer experience fragments.",
+      "blocks": [
+        {
+          "name": "hero-kkr",
+          "instances": [
+            "div.vx2herowithprice"
+          ]
+        },
+        {
+          "name": "carousel-gallery",
+          "instances": [
+            "div.communitygallery"
+          ]
+        },
+        {
+          "name": "cards-kkr-grid",
+          "instances": [
+            "div.KkrFeatureGrid"
+          ],
+          "section": "light"
+        },
+        {
+          "name": "columns-desc",
+          "instances": [
+            "div.descriptioncard"
+          ]
+        },
+        {
+          "name": "cards-merch",
+          "instances": [
+            "div.priceandspec"
+          ],
+          "section": "light"
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc4",
+          "name": "Hero with Interest Form",
+          "selector": "div.vx2herowithprice",
+          "style": null,
+          "blocks": [
+            "hero-kkr"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc5",
+          "name": "Community Gallery Carousel",
+          "selector": "div.communitygallery",
+          "style": null,
+          "blocks": [
+            "carousel-gallery"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc6",
+          "name": "Manifesto Text",
+          "selector": "div.manifestosection",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "div.manifestosection h2",
+            "div.manifestosection p"
+          ]
+        },
+        {
+          "id": "rc7",
+          "name": "Ride Mode / 360 Visual",
+          "selector": "div.rideModeSection",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "div.rideModeSection img"
+          ]
+        },
+        {
+          "id": "rc8",
+          "name": "KKR Feature Grid",
+          "selector": "div.KkrFeatureGrid",
+          "style": "light",
+          "blocks": [
+            "cards-kkr-grid"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc9",
+          "name": "Description Card (2-column)",
+          "selector": "div.descriptioncard",
+          "style": null,
+          "blocks": [
+            "columns-desc"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "rc10",
+          "name": "Power Play Banner",
+          "selector": "div.bannercarousel:nth-of-type(7)",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "div.bannercarousel:nth-of-type(7) img"
+          ]
+        },
+        {
+          "id": "rc11",
+          "name": "KKR Merchandise Grid",
+          "selector": "div.priceandspec",
+          "style": "light",
+          "blocks": [
+            "cards-merch"
+          ],
+          "defaultContent": [
+            "div.priceandspec h2"
+          ]
+        },
+        {
+          "id": "rc12",
+          "name": "Hook-Step Challenge Banner",
+          "selector": "div.bannercarousel:nth-of-type(9)",
+          "style": null,
+          "blocks": [],
+          "defaultContent": [
+            "div.bannercarousel:nth-of-type(9) img"
+          ]
+        }
+      ]
     }
   ]
 }

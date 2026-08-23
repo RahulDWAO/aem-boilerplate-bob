@@ -1,0 +1,84 @@
+/* cards-merch — VIDA × KKR merchandise product cards
+   Design values extracted from source computed styles:
+   https://www.vidaworld.com/vida-kkr-knight-edition.html (.product-card--kkr) */
+.cards-merch > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (width >= 900px) {
+  .cards-merch > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Card */
+.cards-merch > ul > li {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-color);
+  border-radius: 12px;
+  box-shadow: rgb(0 0 0 / 8%) 0 4px 24px 0;
+  overflow: hidden;
+}
+
+/* Product image */
+.cards-merch .cards-merch-card-image {
+  line-height: 0;
+}
+
+.cards-merch .cards-merch-card-image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 642 / 380;
+  object-fit: cover;
+}
+
+/* Card body */
+.cards-merch .cards-merch-card-body {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+/* Description */
+.cards-merch .cards-merch-card-body > p:first-child {
+  margin: 0 0 12px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: var(--text-color);
+}
+
+/* "Know More" link */
+.cards-merch .cards-merch-card-body > p:last-child {
+  margin: 0;
+}
+
+.cards-merch .cards-merch-card-body a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+.cards-merch .cards-merch-card-body a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
+
+/* Orange arrow icon */
+.cards-merch .cards-merch-card-body a picture,
+.cards-merch .cards-merch-card-body a img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 0;
+}
