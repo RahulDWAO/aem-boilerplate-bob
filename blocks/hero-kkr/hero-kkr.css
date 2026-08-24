@@ -57,27 +57,32 @@
   object-fit: contain;
 }
 
-/* Interest-form trigger — overlaid on the hero, matching the source CTA. */
+/*
+ * Interest-form trigger — a TRANSPARENT hotspot overlaid on the "I'm
+ * Interested" pill that's baked into the hero artwork (so we don't render a
+ * second visible button). Positioned/sized as a percentage of the banner so
+ * it stays aligned as the responsive image scales. Sits over the pill near
+ * the lower-left of the artwork (~1440x730 source).
+ */
 .hero-kkr-interest-trigger {
   position: absolute;
-  left: 4%;
-  bottom: 12%;
+  left: 11.5%;
+  bottom: 22%;
   z-index: 2;
-  padding: 12px 32px;
+  width: 14.5%;
+  height: 8.5%;
+  min-height: 40px;
+  padding: 0;
   border: 0;
   border-radius: 50px;
-  background-color: var(--brand-orange, rgb(255 83 16));
-  color: #fff;
-  font-family: var(--body-font-family, "Inter", sans-serif);
-  font-size: 16px;
-  font-weight: 600;
+  background: transparent;
   cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 
-.hero-kkr-interest-trigger:hover,
+/* Keyboard focus ring so the hotspot is discoverable for keyboard users. */
 .hero-kkr-interest-trigger:focus-visible {
-  background-color: var(--brand-orange-hover, rgb(214 66 8));
+  outline: 3px solid var(--brand-purple, rgb(64 2 148));
+  outline-offset: 2px;
 }
 
 /* Modal overlay + dialog. */
@@ -189,11 +194,3 @@
   color: var(--text-color, rgb(29 27 27));
 }
 
-@media (width >= 900px) {
-  .hero-kkr-interest-trigger {
-    left: 5%;
-    bottom: 18%;
-    padding: 14px 40px;
-    font-size: 18px;
-  }
-}

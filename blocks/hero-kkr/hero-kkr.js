@@ -10,10 +10,14 @@ function buildInterestForm(block) {
   // re-decoration), don't append a second trigger/modal.
   if (block.querySelector('.hero-kkr-interest-trigger')) return;
 
+  // The "I'm Interested" button is baked into the hero artwork, so we don't
+  // render our own visible button (that produced a duplicate). Instead we
+  // overlay a transparent, accessible hotspot on top of the artwork's button
+  // so clicking/activating it opens the modal.
   const trigger = document.createElement('button');
   trigger.type = 'button';
   trigger.className = 'hero-kkr-interest-trigger';
-  trigger.textContent = "I'm Interested";
+  trigger.setAttribute('aria-label', "I'm Interested");
   trigger.setAttribute('aria-haspopup', 'dialog');
 
   const overlay = document.createElement('div');
