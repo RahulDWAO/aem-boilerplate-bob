@@ -13,6 +13,28 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
  * reproduce the masonry. The single-tile centre column is flagged so it can
  * stretch to the full masonry height on desktop.
  */
+/**
+ * Derive a human-readable label from a link's destination URL, so linked
+ * image tiles whose captions are baked into the artwork (empty alt) still
+ * have a discernible accessible name. e.g.
+ *   /vx2-plus-electric-scooter.html            -> "VX2 Plus Electric Scooter"
+ *   .../product/vida-kkr-...-purple-helmet?...  -> "Vida Kkr Purple Helmet"
+ */
+function labelFromHref(href) {
+  if (!href) return '';
+  try {
+    const { pathname } = new URL(href, window.location.href);
+    const slug = pathname.split('/').filter(Boolean).pop() || '';
+    return slug
+      .replace(/\.html?$/i, '')
+      .replace(/[-_]+/g, ' ')
+      .trim()
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+  } catch (e) {
+    return '';
+  }
+}
+
 export default function decorate(block) {
   // 1. Flatten authored rows into an ordered list of linked tiles.
   const tiles = [];
@@ -30,12 +52,19 @@ export default function decorate(block) {
     });
   });
 
-  // 2. Optimize images.
+  // 2. Optimize images and ensure every linked tile has an accessible name.
   tiles.forEach((tile) => {
     const img = tile.querySelector('img');
     if (!img) return;
-    const optimized = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    const existingAlt = (img.getAttribute('alt') || '').trim();
+    // Captions are baked into the tile artwork, so the source alt is empty.
+    // Derive a name from the link target so the tile link isn't nameless.
+    const label = existingAlt || (tile.tagName === 'A' ? labelFromHref(tile.getAttribute('href')) : '');
+    const optimized = createOptimizedPicture(img.src, label, false, [{ width: '750' }]);
     tile.querySelector('picture').replaceWith(optimized);
+    if (tile.tagName === 'A' && label && !tile.getAttribute('aria-label')) {
+      tile.setAttribute('aria-label', label);
+    }
   });
 
   // 3. Distribute tiles across three columns.

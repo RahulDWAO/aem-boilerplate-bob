@@ -12,8 +12,16 @@ export default function decorate(block) {
     });
     ul.append(li);
   });
-  ul.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+  ul.querySelectorAll('li').forEach((li) => {
+    const img = li.querySelector('picture > img');
+    if (!img) return;
+    // Source alt is often empty or a placeholder like "null null"; derive a
+    // meaningful accessible name from the card's description so the product
+    // image (and the card link) has a discernible name.
+    const alt = (img.getAttribute('alt') || '').trim();
+    const description = li.querySelector('.cards-merch-card-body p')?.textContent.trim();
+    const resolvedAlt = (!alt || /^(null\s*)+$/i.test(alt)) && description ? description : alt;
+    const optimizedPic = createOptimizedPicture(img.src, resolvedAlt, false, [{ width: '750' }]);
     img.closest('picture').replaceWith(optimizedPic);
   });
   block.textContent = '';
