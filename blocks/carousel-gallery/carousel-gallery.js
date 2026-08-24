@@ -1,18 +1,14 @@
-function updateActiveSlide(slide) {
-  const block = slide.closest('.carousel-gallery');
-  const slideIndex = parseInt(slide.dataset.slideIndex, 10);
+// Update aria state + indicator dots for the active slide index.
+function setActiveState(block, slideIndex) {
   block.dataset.activeSlide = slideIndex;
+  block.dispatchEvent(new CustomEvent('carousel-gallery:slide', { detail: slideIndex }));
 
   const slides = block.querySelectorAll('.carousel-gallery-slide');
-
   slides.forEach((aSlide, idx) => {
     aSlide.setAttribute('aria-hidden', idx !== slideIndex);
     aSlide.querySelectorAll('a').forEach((link) => {
-      if (idx !== slideIndex) {
-        link.setAttribute('tabindex', '-1');
-      } else {
-        link.removeAttribute('tabindex');
-      }
+      if (idx !== slideIndex) link.setAttribute('tabindex', '-1');
+      else link.removeAttribute('tabindex');
     });
   });
 
@@ -29,18 +25,25 @@ function updateActiveSlide(slide) {
   });
 }
 
+function updateActiveSlide(slide) {
+  const block = slide.closest('.carousel-gallery');
+  setActiveState(block, parseInt(slide.dataset.slideIndex, 10));
+}
+
 export function showSlide(block, slideIndex = 0) {
   const slides = block.querySelectorAll('.carousel-gallery-slide');
   let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
   if (slideIndex >= slides.length) realSlideIndex = 0;
   const activeSlide = slides[realSlideIndex];
 
-  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-gallery-slides').scrollTo({
-    top: 0,
-    left: activeSlide.offsetLeft,
-    behavior: 'smooth',
-  });
+  // Center the target slide. scrollIntoView respects scroll-snap and viewport
+  // bounds — unlike scrollTo({left: offsetLeft}), which overshoots on the
+  // centre-snapped peek layout (the last slides' offsetLeft exceeds maxScroll,
+  // so the browser clamps and the carousel stalls).
+  activeSlide.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // Set active state directly — the IntersectionObserver may not fire for the
+  // clamped last slides, so we can't rely on it alone.
+  setActiveState(block, realSlideIndex);
 }
 
 function bindEvents(block) {
@@ -69,6 +72,55 @@ function bindEvents(block) {
   block.querySelectorAll('.carousel-gallery-slide').forEach((slide) => {
     slideObserver.observe(slide);
   });
+}
+
+const AUTOPLAY_INTERVAL = 4000;
+
+/**
+ * Auto-advance the gallery, matching the source's looping behaviour.
+ * Accessibility guards: respect prefers-reduced-motion, and pause while the
+ * user is hovering, focused within, or the tab is hidden.
+ */
+function startAutoplay(block) {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (reduceMotion.matches) return;
+
+  let timer = null;
+  // Track our own index rather than reading dataset.activeSlide: on the peek
+  // layout the IntersectionObserver (0.5 threshold) doesn't always mark a new
+  // active slide, which would otherwise stall autoplay on slide 0.
+  let autoIndex = parseInt(block.dataset.activeSlide || '0', 10);
+  const advance = () => {
+    const slides = block.querySelectorAll('.carousel-gallery-slide');
+    autoIndex = (autoIndex + 1) % slides.length;
+    showSlide(block, autoIndex);
+  };
+  // Keep our counter in sync when the user drives the carousel (dots/scroll).
+  block.addEventListener('carousel-gallery:slide', (e) => {
+    if (typeof e.detail === 'number') autoIndex = e.detail;
+  });
+  const play = () => {
+    if (timer) return;
+    timer = window.setInterval(advance, AUTOPLAY_INTERVAL);
+  };
+  const pause = () => {
+    if (!timer) return;
+    window.clearInterval(timer);
+    timer = null;
+  };
+
+  block.addEventListener('mouseenter', pause);
+  block.addEventListener('mouseleave', play);
+  block.addEventListener('focusin', pause);
+  block.addEventListener('focusout', play);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) pause();
+    else play();
+  });
+  // Stop autoplaying if the user opts out of motion mid-session.
+  reduceMotion.addEventListener('change', (e) => (e.matches ? pause() : play()));
+
+  play();
 }
 
 function createSlide(row, slideIndex, carouselId) {
@@ -173,5 +225,6 @@ export default async function decorate(block) {
 
   if (!isSingleSlide) {
     bindEvents(block);
+    startAutoplay(block);
   }
 }

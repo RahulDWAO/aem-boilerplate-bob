@@ -14,7 +14,14 @@
   --cg-card-radius: 16px;
   --cg-card-aspect: 580 / 442;
 
+  position: relative;
   background-color: var(--brand-cream, rgb(249 247 242));
+
+  /* Faint "KKR moments" watermark texture behind the gallery (source kkr-bg.png). */
+  background-image: url('./kkr-bg.webp');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
   padding: 40px 0 48px;
 }
 

@@ -29,6 +29,7 @@
 }
 
 .hero-kkr {
+  position: relative;
   margin: 0;
   padding: 0;
 }
@@ -54,4 +55,145 @@
   height: auto;
   max-width: 100%;
   object-fit: contain;
+}
+
+/* Interest-form trigger — overlaid on the hero, matching the source CTA. */
+.hero-kkr-interest-trigger {
+  position: absolute;
+  left: 4%;
+  bottom: 12%;
+  z-index: 2;
+  padding: 12px 32px;
+  border: 0;
+  border-radius: 50px;
+  background-color: var(--brand-orange, rgb(255 83 16));
+  color: #fff;
+  font-family: var(--body-font-family, "Inter", sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hero-kkr-interest-trigger:hover,
+.hero-kkr-interest-trigger:focus-visible {
+  background-color: var(--brand-orange-hover, rgb(214 66 8));
+}
+
+/* Modal overlay + dialog. */
+.hero-kkr-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgb(20 8 46 / 60%);
+}
+
+.hero-kkr-modal-overlay[hidden] {
+  display: none;
+}
+
+.hero-kkr-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px 32px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 25%);
+}
+
+.hero-kkr-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  border: 0;
+  background: none;
+  color: var(--text-color, rgb(29 27 27));
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.hero-kkr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-kkr-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid rgb(0 0 0 / 20%);
+  border-radius: 8px;
+  font-family: var(--body-font-family, "Inter", sans-serif);
+  font-size: 16px;
+}
+
+.hero-kkr-field input:focus-visible {
+  outline: 2px solid var(--brand-orange, rgb(255 83 16));
+  border-color: var(--brand-orange, rgb(255 83 16));
+}
+
+.hero-kkr-consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-color, rgb(29 27 27));
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.hero-kkr-consent input {
+  margin-top: 2px;
+  accent-color: var(--brand-orange, rgb(255 83 16));
+}
+
+.hero-kkr-consent a {
+  color: var(--brand-purple, rgb(64 2 148));
+  text-decoration: underline;
+}
+
+.hero-kkr-submit {
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 50px;
+  background-color: var(--brand-orange, rgb(255 83 16));
+  color: #fff;
+  font-family: var(--body-font-family, "Inter", sans-serif);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.hero-kkr-submit:disabled {
+  background-color: rgb(0 0 0 / 20%);
+  cursor: not-allowed;
+}
+
+.hero-kkr-submit:not(:disabled):hover {
+  background-color: var(--brand-orange-hover, rgb(214 66 8));
+}
+
+.hero-kkr-thanks h3 {
+  margin: 0;
+  text-align: center;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--text-color, rgb(29 27 27));
+}
+
+@media (width >= 900px) {
+  .hero-kkr-interest-trigger {
+    left: 5%;
+    bottom: 18%;
+    padding: 14px 40px;
+    font-size: 18px;
+  }
 }
