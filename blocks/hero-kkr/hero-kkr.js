@@ -6,6 +6,10 @@
  * (no backend) — on submit we show the source's confirmation message.
  */
 function buildInterestForm(block) {
+  // Idempotency guard: if decorate() runs more than once (hot reload or a
+  // re-decoration), don't append a second trigger/modal.
+  if (block.querySelector('.hero-kkr-interest-trigger')) return;
+
   const trigger = document.createElement('button');
   trigger.type = 'button';
   trigger.className = 'hero-kkr-interest-trigger';
